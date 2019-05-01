@@ -1,7 +1,7 @@
 //First line of main.js wraps everything in a self-executing anonymous function to move to local scope
 (function(){
 
-		var attrArray = ["Search_Name"];
+		var attrArray = ["Bio"];
 		var expressed = attrArray[0];
 		
 		var chartWidth = 300,
@@ -65,18 +65,44 @@
 				treeGroup.attr('transform', d3.event.transform);
 			}));
 			
-			setChart();
+			setChart(middleEarth);
 		};
 		};
 		
+		//function to create dynamic label
+		function setLabel(props){
+			//label content
+			var labelAttribute = "<h1>" + props[expressed] +
+				"</h1><b>" + expressed + "</b>";
+
+			//create info label div
+			var infolabel = d3.select("body")
+				.append("div")
+				.attr("class", "infolabel")
+				.attr("id", props.Id + "_label")
+				.html(labelAttribute);
+
+			var regionName = infolabel.append("div")
+				.attr("class", "labelname")
+				.html(props.name);
+		};
+		
 		//function to create coordinated bar chart
-		function setChart(){
+		function setChart(middleEarth){
 			//create a second svg element to hold the bar chart
 			var chart = d3.select("body")
-				.append("svg")
+				.append("div")
 				.attr("width", chartWidth)
 				.attr("height", chartHeight)
 				.attr("class", "chart");
+				
+			var info = chart.append("text")
+				.text(middleEarth);
+				
+			var panel = chart.selectAll(".panel")
+			    .data(middleEarth)
+				.enter()
+				.append("rect");
 		};
 				
 		//function to highlight enumeration units and bars

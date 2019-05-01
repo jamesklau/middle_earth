@@ -4,8 +4,8 @@
 		var attrArray = ["Search_Name"];
 		var expressed = attrArray[0];
 		
-		var chartWidth = 400,
-			chartHeight = 420;
+		var chartWidth = 300,
+			chartHeight = 950;
 				
 	//begin script when window loads
 	window.onload = setMap();

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en"><Esri><CreaDate>20190423</CreaDate><CreaTime>13445600</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.5\ArcToolbox\Toolboxes\Spatial Analyst Tools.tbx\Reclassify" Date="20190423" Time="134456">Reclassify MiddleEarth_Full_corrected.jpg Value "0 129 1;129 255 2" "F:\Geo575\Final Project\Middle_Earth" DATA</Process></lineage></DataProperties></Esri></metadata>

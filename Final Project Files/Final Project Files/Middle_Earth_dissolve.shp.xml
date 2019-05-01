@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en"><Esri><CreaDate>20190430</CreaDate><CreaTime>16241800</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.5\ArcToolbox\Toolboxes\Data Management Tools.tbx\Dissolve" Date="20190430" Time="162418">Dissolve Middle_Earth_Reproj "F:\Geo575\Final Project Files\Middle_Earth_dissolve.shp" Middle_Earth_Reproj.Id # MULTI_PART DISSOLVE_LINES</Process></lineage></DataProperties></Esri></metadata>

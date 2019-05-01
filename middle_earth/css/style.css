@@ -23,3 +23,10 @@
 .map {
     border: medium solid #999;
 }
+
+#panel {
+    width: 16%;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+}

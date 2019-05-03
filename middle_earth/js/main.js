@@ -1,11 +1,12 @@
 //First line of main.js wraps everything in a self-executing anonymous function to move to local scope
 (function(){
 
-		var attrArray = ["Bio"];
+		var attrArray = ["Bio", "Name", "Search_Name"];
 		var expressed = attrArray[0];
 		
+ 
 		var chartWidth = 300,
-			chartHeight = 950;
+				chartHeight = 950;
 				
 	//begin script when window loads
 	window.onload = setMap();
@@ -40,8 +41,11 @@
 		promises.push(d3.json("data/Middle_Earth_Reproj.topojson")); //load background spatial data
 		Promise.all(promises).then(callback);
 
+		
 		function callback(data){ 
+			
 			middleEarth = data[0];
+			
 			
 			//translate Middle Earth TopoJSON
 			var middle_Earth = topojson.feature(middleEarth, middleEarth.objects.Middle_Earth_prj_dissolved).features;
@@ -56,31 +60,41 @@
 				})
 				.attr("d", path)
 				.on("click", function(d){
-					console.log(d.properties)
+					console.log(d)
+					setBios(d.properties)
 				});
 		   
 			var rootSVG = d3.select('.map');
 			var treeGroup = d3.selectAll('.middle_Earth');
 				rootSVG.call(d3.zoom().on('zoom', function() {
 				treeGroup.attr('transform', d3.event.transform);
-			}));
+			}));  
 			
-			setChart(middleEarth);
 		};
-		};
-		
+		};   
+		  
 		//function to create dynamic label
-		function setLabel(props){
-			//label content
-			var labelAttribute = "<h1>" + props[expressed] +
-				"</h1><b>" + expressed + "</b>";
+		function setBios(props){
 
+			
+			var panel = d3.select("body")
+				.append("div")
+				.attr("width", chartWidth)
+				.attr("height", chartHeight)
+				.attr("class", "chart");
+				
+			var info = panel.append("text")
+				.text(props.bio);
+
+			//label content
+			var bioAttribute = props.bio;
+			
 			//create info label div
 			var infolabel = d3.select("body")
 				.append("div")
 				.attr("class", "infolabel")
 				.attr("id", props.Id + "_label")
-				.html(labelAttribute);
+				.html(bioAttribute);
 
 			var regionName = infolabel.append("div")
 				.attr("class", "labelname")
@@ -88,22 +102,10 @@
 		};
 		
 		//function to create coordinated bar chart
-		function setChart(middleEarth){
+		
+		//function setPanel(props){}
 			//create a second svg element to hold the bar chart
-			var chart = d3.select("body")
-				.append("div")
-				.attr("width", chartWidth)
-				.attr("height", chartHeight)
-				.attr("class", "chart");
-				
-			var info = chart.append("text")
-				.text(middleEarth);
-				
-			var panel = chart.selectAll(".panel")
-			    .data(middleEarth)
-				.enter()
-				.append("rect");
-		};
+
 				
 		//function to highlight enumeration units and bars
 		function highlight(props){

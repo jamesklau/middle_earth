@@ -1,29 +1,29 @@
 .map {
 	border: medium solid #999;
 }
-.chart {
+.panel {
     width: 15%;
     padding: 100px;
     display: inline-block;
     vertical-align: top;
 } 
-.chart {
+.panel {
     background-color: rgba(128,128,128,.2);
     border: medium solid #999;
     float: right;
     margin: 10px 20px 0 0;
 }
 
-.chart {
+.panel {
     float: right;
     margin: 7px 20px 0 0;
 }
 
-.chartBackground {
+.panelBackground {
     fill: rgba(128,128,128,.2);
 }
 
-.chartFrame {
+.panelFrame {
     fill: none;
     stroke: #999;
     stroke-width: 3px;

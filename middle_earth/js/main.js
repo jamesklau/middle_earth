@@ -5,8 +5,8 @@
 		var expressed = attrArray[0];
 		
  
-		var chartWidth = 300,
-				chartHeight = 950;
+		var panelWidth = 300,
+			panelHeight = 950;
 				
 	//begin script when window loads
 	window.onload = setMap();
@@ -56,13 +56,23 @@
 				.enter()
 				.append("path")
 				.attr("class", function(d){
-					return "middle_Earth " + d.properties.Id;
+					return "middle_Earth " + "a" + d.properties.Id;
 				})
 				.attr("d", path)
 				.on("click", function(d){
-					console.log(d)
+					d3.select(".panel").remove();
 					setBios(d.properties)
-				});
+				})
+				.on("mouseover", function(d){
+					highlight(d.properties);
+				})
+				.on("mouseout", function(d){
+					dehighlight(d.properties);
+				})
+				
+			//below Example 2.2 line 16...add style descriptor to each path
+            var desc = middle_Earth.append("desc")
+                .text('{"stroke": "#000", "stroke-width": "0.5px"}');
 		   
 			var rootSVG = d3.select('.map');
 			var treeGroup = d3.selectAll('.middle_Earth');
@@ -76,15 +86,15 @@
 		//function to create dynamic label
 		function setBios(props){
 
-			
 			var panel = d3.select("body")
 				.append("div")
-				.attr("width", chartWidth)
-				.attr("height", chartHeight)
-				.attr("class", "chart");
+				.attr("width", panelWidth)
+				.attr("height", panelHeight)
+				.attr("class", "panel"); 
 				
 			var info = panel.append("text")
-				.text(props.bio);
+				
+				.text(props.Bio);
 
 			//label content
 			var bioAttribute = props.bio;
@@ -99,19 +109,33 @@
 			var regionName = infolabel.append("div")
 				.attr("class", "labelname")
 				.html(props.name);
-		};
-		
-		//function to create coordinated bar chart
-		
-		//function setPanel(props){}
-			//create a second svg element to hold the bar chart
-
+		};	
 				
 		//function to highlight enumeration units and bars
 		function highlight(props){
 			//change stroke
-			var selected = d3.selectAll(props.Id)
+			var selected = d3.selectAll(".a" + props.Id)
 				.style("stroke", "blue")
 				.style("stroke-width", "2");
+		};
+		
+		//function to reset the element style on mouseout
+		function dehighlight(props){
+			var selected = d3.selectAll('.a' + props.Id)
+				.style("stroke", function(){
+					return getStyle(this, "stroke")
+				})
+				.style("stroke-width", function(){
+					return getStyle(this, "stroke-width")
+				});
+		     function getStyle(element, styleName){
+				var styleText = d3.select(element)
+					.select("desc")
+					.text();
+
+				var styleObject = JSON.parse(styleText);
+
+				return styleObject[styleName];
+			}; 
 		};
 })(); //last line of main.js

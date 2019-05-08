@@ -1,31 +1,32 @@
 //First line of main.js wraps everything in a self-executing anonymous function to move to local scope
 (function(){
 
+		//assigns attributes to an array
 		var attrArray = ["Bio", "Name", "Search_Name"];
 		var expressed = attrArray[0];
 		
- 
-		var panelWidth = 300,
+		//sets panel size for information
+		var panelWidth = window.innerWidth * 0.15, 
 			panelHeight = 950;
 				
 	//begin script when window loads
 	window.onload = setMap();
 
-	//Example 1.4 line 1...set up choropleth map
+	//sets up middle earth map
 	function setMap(){
 
-			//map frame dimensions
-		var width = 1500,
+		//map frame dimensions, percent of screen
+		var width = window.innerWidth * 0.8,
 			height = 950;
 			
-			//create new svg container for the map
+		//create new svg container for the map
 		var map = d3.select("body")
 				.append("svg")
 				.attr("class", "map")
 				.attr("width", width)
 				.attr("height", height);
 				
-				   //Example 2.1 line 15...create Albers equal area conic projection centered on France
+		//middle earth projected onto a real world location, it is a tiny location off of the coast of africa and needs to be extremely zoomed in
 		var projection = d3.geoAlbers()
 				.center([0, -.0599])
 				.rotate([-.097, 0])
@@ -33,6 +34,7 @@
 				.scale(460000)
 				.translate([width / 2, height / 2]);
 			
+		
 		var path = d3.geoPath()
 				.projection(projection);
 			
@@ -50,7 +52,7 @@
 			//translate Middle Earth TopoJSON
 			var middle_Earth = topojson.feature(middleEarth, middleEarth.objects.Middle_Earth_prj_dissolved).features;
 			
-			//add Europe countries to map  
+			//add middle earth countries to map  
 			var middle_Earth = map.selectAll(".middle_Earth")
 				.data(middle_Earth)
 				.enter()
@@ -58,48 +60,70 @@
 				.attr("class", function(d){
 					return "middle_Earth " + "a" + d.properties.Id;
 				})
+				//click to on a specific location to retreive the bio for it
 				.attr("d", path)
 				.on("click", function(d){
 					d3.select(".panel").remove();
+					console.log(d.properties)
 					setBios(d.properties)
 				})
+				//hover mouse over an area to highlight it for an affordance
 				.on("mouseover", function(d){
 					highlight(d.properties);
 				})
+				//dehighlight it function so that the highlighting goes away
 				.on("mouseout", function(d){
 					dehighlight(d.properties);
 				})
 				
-			//below Example 2.2 line 16...add style descriptor to each path
+			//add style descriptor to each path
             var desc = middle_Earth.append("desc")
                 .text('{"stroke": "#000", "stroke-width": "0.5px"}');
 		   
+			//zoom and pan code
 			var rootSVG = d3.select('.map');
 			var treeGroup = d3.selectAll('.middle_Earth');
 				rootSVG.call(d3.zoom().on('zoom', function() {
 				treeGroup.attr('transform', d3.event.transform);
-			}));  
+			})); 
+				
+			//search code for the locations	
+			var search = d3.select("body").append("input").attr("id", "Search_Nam");
+			var searchButton = d3.select("body").append("button")
+				.attr("type", "button")
+				.text("search")
+				.on('click', function(d){
+					if (d3.select(d).data()[0].Search_Nam == document.getElementById("Search_Nam").value) {
+					   setBios(d.properties)
+
+					} else {
+						d3.select(d)
+                        
+					}
+
+			});
 			
 		};
 		};   
 		  
-		//function to create dynamic label
+		//function for the bios
 		function setBios(props){
 
 			var panel = d3.select("body")
 				.append("div")
+                .attr("class", "panel")
 				.attr("width", panelWidth)
 				.attr("height", panelHeight)
-				.attr("class", "panel"); 
+				
 				
 			var info = panel.append("text")
 				
 				.text(props.Bio);
 
-			//label content
+			//bio content
 			var bioAttribute = props.bio;
 			
-			//create info label div
+			//create bio info div
 			var infolabel = d3.select("body")
 				.append("div")
 				.attr("class", "infolabel")
@@ -111,7 +135,7 @@
 				.html(props.name);
 		};	
 				
-		//function to highlight enumeration units and bars
+		//function to highlight enumeration units
 		function highlight(props){
 			//change stroke
 			var selected = d3.selectAll(".a" + props.Id)

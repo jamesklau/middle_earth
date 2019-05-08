@@ -1,9 +1,10 @@
 .map {
+    width: 85%;
 	border: medium solid #999;
 }
 .panel {
     width: 15%;
-    padding: 100px;
+    padding: 10px;
     display: inline-block;
     vertical-align: top;
 } 

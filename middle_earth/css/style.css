@@ -1,5 +1,7 @@
 .map {
-    width: 85%;
+    float: left;
+    width: 75%;
+    height: 50%;
 	border: medium solid #999;
 }
 .panel {
@@ -11,12 +13,12 @@
 .panel {
     background-color: rgba(128,128,128,.2);
     border: medium solid #999;
-    float: right;
+    float: top;
     margin: 10px 20px 0 0;
 }
 
 .panel {
-    float: right;
+    float: top, right;
     margin: 7px 20px 0 0;
 }
 

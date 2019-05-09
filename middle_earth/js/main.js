@@ -15,7 +15,7 @@
 	//sets up middle earth map
 	function setMap(){
 
-		//map frame dimensions, percent of screen
+		//map frame dimensions, percent of screen 
 		var width = window.innerWidth * 0.8,
 			height = 950;
 			
@@ -29,9 +29,9 @@
 		//middle earth projected onto a real world location, it is a tiny location off of the coast of africa and needs to be extremely zoomed in
 		var projection = d3.geoAlbers()
 				.center([0, -.0599])
-				.rotate([-.097, 0])
+				.rotate([-.10, 0])
 				.parallels([0, 90])
-				.scale(460000)
+				.scale(300000)
 				.translate([width / 2, height / 2]);
 			
 		
@@ -64,7 +64,6 @@
 				.attr("d", path)
 				.on("click", function(d){
 					d3.select(".panel").remove();
-					console.log(d.properties)
 					setBios(d.properties)
 				})
 				//hover mouse over an area to highlight it for an affordance
@@ -75,7 +74,7 @@
 				.on("mouseout", function(d){
 					dehighlight(d.properties);
 				})
-				
+                
 			//add style descriptor to each path
             var desc = middle_Earth.append("desc")
                 .text('{"stroke": "#000", "stroke-width": "0.5px"}');
@@ -85,24 +84,24 @@
 			var treeGroup = d3.selectAll('.middle_Earth');
 				rootSVG.call(d3.zoom().on('zoom', function() {
 				treeGroup.attr('transform', d3.event.transform);
-			})); 
+			}));   
 				
-			//search code for the locations	
-			var search = d3.select("body").append("input").attr("id", "Search_Nam");
-			var searchButton = d3.select("body").append("button")
-				.attr("type", "button")
-				.text("search")
-				.on('click', function(d){
-					if (d3.select(d).data()[0].Search_Nam == document.getElementById("Search_Nam").value) {
-					   setBios(d.properties)
+            // Create form for search (see function below).
+            var search = d3.select("body").append('form').attr('onsubmit', 'return false;');
 
-					} else {
-						d3.select(d)
-                        
-					}
+            var box = search.append('input')
+                .attr('type', 'text')
+                .attr('id', 'searchTerm')
+                .attr('placeholder', 'Type to search...');
+            
+            var button = search.append('input')
+                .attr('type', 'button')
+                .attr('value', 'Search')
+                .on('click', function(){ 
+                    searchMiddleEarth() 
+                });
 
-			});
-			
+
 		};
 		};   
 		  
@@ -117,22 +116,7 @@
 				
 				
 			var info = panel.append("text")
-				
 				.text(props.Bio);
-
-			//bio content
-			var bioAttribute = props.bio;
-			
-			//create bio info div
-			var infolabel = d3.select("body")
-				.append("div")
-				.attr("class", "infolabel")
-				.attr("id", props.Id + "_label")
-				.html(bioAttribute);
-
-			var regionName = infolabel.append("div")
-				.attr("class", "labelname")
-				.html(props.name);
 		};	
 				
 		//function to highlight enumeration units
@@ -162,4 +146,18 @@
 				return styleObject[styleName];
 			}; 
 		};
+    
+        // Search function
+        function searchMiddleEarth(props) {
+            
+            console.log(props);
+            var term = document.getElementById('searchTerm').value;
+            var selected = d3.selectAll('.a' + props.Id).filter(function (d) { 
+                return d
+            });
+            
+
+        }
+    
+    
 })(); //last line of main.js

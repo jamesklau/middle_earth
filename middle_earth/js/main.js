@@ -28,11 +28,11 @@
 				
 		//middle earth projected onto a real world location, it is a tiny location off of the coast of africa and needs to be extremely zoomed in
 		var projection = d3.geoAlbers()
-				.center([0, -.0599])
+				.center([0, -.12])
 				.rotate([-.10, 0])
 				.parallels([0, 90])
-				.scale(300000)
-				.translate([width / 2, height / 2]);
+				.scale(220000)
+				.translate([width / 2, height / 2]);  
 			
 		
 		var path = d3.geoPath()
@@ -74,7 +74,7 @@
 				.on("mouseout", function(d){
 					dehighlight(d.properties);
 				})
-                
+                 
 			//add style descriptor to each path
             var desc = middle_Earth.append("desc")
                 .text('{"stroke": "#000", "stroke-width": "0.5px"}');
@@ -101,7 +101,7 @@
                     searchMiddleEarth() 
                 });
 		};
-		};   
+		};    
 		  
 		//function for the bios
 		function setBios(props){

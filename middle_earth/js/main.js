@@ -40,7 +40,7 @@
 			
 		//use Promise.all to parallelize asynchronous data loading
 		var promises = [];
-		promises.push(d3.json("data/Middle_Earth_Reproj.topojson")); //load background spatial data
+		promises.push(d3.json("data/Middle_Earth_prj_dissolved.topojson")); //load background spatial data
 		Promise.all(promises).then(callback);
 
 		
@@ -113,7 +113,7 @@
 				.attr("height", panelHeight)
 				
 				
-			var info = panel.append("text")
+			var info = panel.append("text") 
 				.text(props.Bio);
 		};	
 				
@@ -154,7 +154,5 @@
             });
             
 
-        }
-
-    
+        }   
 })(); //last line of main.js

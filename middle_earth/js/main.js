@@ -91,7 +91,7 @@
 
             var box = search.append('input')
                 .attr('type', 'text')
-                .attr('id', 'searchTerm')
+                .attr('id', 'location')
                 .attr('placeholder', 'Type to search...');
             
             var button = search.append('input')
@@ -100,14 +100,12 @@
                 .on('click', function(){ 
                     searchMiddleEarth() 
                 });
-
-
 		};
 		};   
 		  
 		//function for the bios
 		function setBios(props){
-
+               
 			var panel = d3.select("body")
 				.append("div")
                 .attr("class", "panel")
@@ -127,7 +125,7 @@
 				.style("stroke-width", "2");
 		};
 		
-		//function to reset the element style on mouseout
+		//function to reset the element style on mouseout   
 		function dehighlight(props){
 			var selected = d3.selectAll('.a' + props.Id)
 				.style("stroke", function(){
@@ -148,16 +146,15 @@
 		};
     
         // Search function
-        function searchMiddleEarth(props) {
+        function searchMiddleEarth() {
             
-            console.log(props);
-            var term = document.getElementById('searchTerm').value;
-            var selected = d3.selectAll('.a' + props.Id).filter(function (d) { 
+            var selectedLocation = document.getElementById("location").value;
+            var location = d3.selectAll(Search_Nam).filter(function (d) { 
                 return d
             });
             
 
         }
-    
+
     
 })(); //last line of main.js

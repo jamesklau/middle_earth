@@ -2,7 +2,7 @@
     float: left;
     width: 75%;
     height: 50%;
-	border: medium solid #999;
+	border: medium solid black;
 }
 .panel {
     width: 15%;
@@ -12,7 +12,7 @@
 } 
 .panel {
     background-color: rgba(128,128,128,.2);
-    border: medium solid #999;
+    border: medium solid black;
     float: top;
     margin: 10px 20px 0 0;
 }
@@ -28,7 +28,7 @@
 
 .panelFrame {
     fill: none;
-    stroke: #999;
+    stroke: black;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }

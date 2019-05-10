@@ -23,7 +23,7 @@ body, html {
     float: left;
     width: 75%;
     height: 80%;
-	border: medium solid black;
+	border: medium solid #999;
 }
 .panel {
     width: 15%;
@@ -33,7 +33,7 @@ body, html {
 } 
 .panel {
     background-color: rgba(128,128,128,.2);
-    border: medium solid black;
+    border: medium solid #999;
     float: top;
     margin: 10px 20px 0 0;
 }

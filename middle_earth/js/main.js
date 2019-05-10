@@ -32,7 +32,7 @@
 				.rotate([-.10, 0])
 				.parallels([0, 90])
 				.scale(220000)
-				.translate([width / 2, height / 2]);  
+				.translate([width / 2, height / 2]);
 			
 		
 		var path = d3.geoPath()
@@ -40,7 +40,7 @@
 			
 		//use Promise.all to parallelize asynchronous data loading
 		var promises = [];
-		promises.push(d3.json("data/Middle_Earth_prj_dissolved.topojson")); //load background spatial data
+		promises.push(d3.json("data/Middle_Earth_Reproj.topojson")); //load background spatial data
 		Promise.all(promises).then(callback);
 
 		
@@ -50,11 +50,11 @@
 			
 			
 			//translate Middle Earth TopoJSON
-			var middle_Earth = topojson.feature(middleEarth, middleEarth.objects.Middle_Earth_prj_dissolved).features;
+			var middle_Earth_features = topojson.feature(middleEarth, middleEarth.objects.Middle_Earth_prj_dissolved).features;
 			
 			//add middle earth countries to map  
 			var middle_Earth = map.selectAll(".middle_Earth")
-				.data(middle_Earth)
+				.data(middle_Earth_features)
 				.enter()
 				.append("path")
 				.attr("class", function(d){
@@ -74,7 +74,7 @@
 				.on("mouseout", function(d){
 					dehighlight(d.properties);
 				})
-                 
+                
 			//add style descriptor to each path
             var desc = middle_Earth.append("desc")
                 .text('{"stroke": "#000", "stroke-width": "0.5px"}');
@@ -91,21 +91,23 @@
 
             var box = search.append('input')
                 .attr('type', 'text')
-                .attr('id', 'location')
+                .attr('id', 'searchTerm')
                 .attr('placeholder', 'Type to search...');
             
             var button = search.append('input')
                 .attr('type', 'button')
                 .attr('value', 'Search')
                 .on('click', function(){ 
-                    searchMiddleEarth() 
+                    searchMiddleEarth(middle_Earth_features);
                 });
+
+
 		};
-		};    
+		};   
 		  
 		//function for the bios
 		function setBios(props){
-               
+
 			var panel = d3.select("body")
 				.append("div")
                 .attr("class", "panel")
@@ -113,7 +115,7 @@
 				.attr("height", panelHeight)
 				
 				
-			var info = panel.append("text") 
+			var info = panel.append("text")
 				.text(props.Bio);
 		};	
 				
@@ -125,7 +127,7 @@
 				.style("stroke-width", "2");
 		};
 		
-		//function to reset the element style on mouseout   
+		//function to reset the element style on mouseout
 		function dehighlight(props){
 			var selected = d3.selectAll('.a' + props.Id)
 				.style("stroke", function(){
@@ -142,17 +144,28 @@
 				var styleObject = JSON.parse(styleText);
 
 				return styleObject[styleName];
-			}; 
+			};  
 		};
     
         // Search function
-        function searchMiddleEarth() {
+        function searchMiddleEarth(middle_Earth_features) {
             
-            var selectedLocation = document.getElementById("location").value;
-            var location = d3.selectAll(Search_Nam).filter(function (d) { 
-                return d
-            });
+            
+            var term = document.getElementById('searchTerm').value;
+            //console.log(middle_Earth_features.length);
+
+            for (var i=0; i<middle_Earth_features.length; i++){
+		        var name = middle_Earth_features[i].properties.Search_Nam; 
+		        if (term == name) {
+		            // show new panel
+		            d3.select(".panel").remove();
+					setBios(middle_Earth_features[i].properties);
+		        };
+    		};
+
             
 
-        }   
+        }
+    
+    
 })(); //last line of main.js
